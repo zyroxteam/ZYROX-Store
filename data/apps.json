@@ -1,0 +1,25 @@
+{
+  "featured": [],
+  "trending": [],
+  "editors_choice": [],
+  "new_releases": [],
+  "hidden_gems": [],
+  "popular_games": [],
+  "popular_tools": [],
+  "ai_apps": [],
+  "categories": [
+    {"id":"games","name":"Games","emoji":"🎮","gradient":"linear-gradient(135deg,#ff3b6b,#ff9500)"},
+    {"id":"tools","name":"Tools","emoji":"🛠️","gradient":"linear-gradient(135deg,#00e5ff,#8b5cf6)"},
+    {"id":"ai","name":"AI Apps","emoji":"🤖","gradient":"linear-gradient(135deg,#8b5cf6,#ff00d4)"},
+    {"id":"photo","name":"Photo","emoji":"📸","gradient":"linear-gradient(135deg,#ff00d4,#ff9500)"},
+    {"id":"productivity","name":"Productivity","emoji":"📋","gradient":"linear-gradient(135deg,#22e06a,#00e5ff)"},
+    {"id":"music","name":"Music","emoji":"🎵","gradient":"linear-gradient(135deg,#ff00d4,#8b5cf6)"},
+    {"id":"health","name":"Health","emoji":"💪","gradient":"linear-gradient(135deg,#22e06a,#ffd700)"},
+    {"id":"personalization","name":"Themes","emoji":"🎨","gradient":"linear-gradient(135deg,#ffd700,#ff9500)"},
+    {"id":"security","name":"Security","emoji":"🛡️","gradient":"linear-gradient(135deg,#00e5ff,#22e06a)"},
+    {"id":"finance","name":"Finance","emoji":"💰","gradient":"linear-gradient(135deg,#ffd700,#f7931a)"},
+    {"id":"social","name":"Social","emoji":"💬","gradient":"linear-gradient(135deg,#00e5ff,#ff00d4)"},
+    {"id":"education","name":"Education","emoji":"📚","gradient":"linear-gradient(135deg,#8b5cf6,#00e5ff)"}
+  ],
+  "reviews": {}
+}

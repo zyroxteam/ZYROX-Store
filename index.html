@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#00e5ff">
+<title>ZYROX STORE 👑</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="assets/icons/icon-192x192.png">
+<link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+.admin-login{position:fixed;inset:0;background:var(--bg);z-index:500;display:flex;align-items:center;justify-content:center;padding:20px}
+.admin-login-box{width:100%;max-width:380px;padding:32px;border-radius:24px;background:var(--bg-card);border:var(--border);backdrop-filter:var(--blur);text-align:center}
+.admin-login-box .logo{width:80px;height:80px;margin:0 auto 16px;border-radius:20px;background:var(--grad);display:flex;align-items:center;justify-content:center;font-family:Orbitron;font-size:40px;font-weight:900;color:#fff;box-shadow:var(--glow-c)}
+.admin-login-box h2{font-family:Orbitron;font-size:22px;font-weight:800;margin-bottom:4px;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.admin-login-box p{font-size:13px;color:var(--text-dim);margin-bottom:20px}
+.admin-input{width:100%;padding:14px 16px;margin-bottom:10px;background:rgba(0,0,0,.3);border:var(--border);border-radius:12px;color:var(--text);font-size:14px;outline:none}
+.admin-input:focus{border-color:var(--cyan);box-shadow:var(--glow-c)}
+.admin-btn{width:100%;padding:14px;margin-top:8px;background:var(--grad);color:#fff;border-radius:12px;font-size:15px;font-weight:700;box-shadow:var(--glow-c);transition:transform .15s;border:none;cursor:pointer}
+.admin-btn:active{transform:scale(.97)}
+.admin-err{color:#ff3b6b;font-size:12px;margin-top:8px;min-height:18px}
+.admin-panel-pg .admin-header-bar{margin:0 20px 16px;padding:20px;border-radius:20px;background:linear-gradient(135deg,rgba(255,0,212,.15),rgba(139,92,246,.15));border:var(--border-m)}
+.upload-form{margin:0 20px;padding:20px;border-radius:20px;background:var(--bg-card);border:var(--border);backdrop-filter:var(--blur)}
+.upload-form label{display:block;font-size:12px;color:var(--text-dim);font-weight:600;text-transform:uppercase;letter-spacing:1px;margin:12px 0 6px}
+.upload-form input,.upload-form select,.upload-form textarea{width:100%;padding:12px 14px;background:rgba(0,0,0,.3);border:var(--border);border-radius:10px;color:var(--text);font-size:14px;font-family:inherit;outline:none}
+.upload-form textarea{min-height:70px;resize:vertical}
+.upload-form input:focus,.upload-form select:focus,.upload-form textarea:focus{border-color:var(--cyan)}
+.file-drop{border:2px dashed rgba(0,229,255,.3);border-radius:12px;padding:20px;text-align:center;cursor:pointer;transition:all .2s;margin-top:4px}
+.file-drop:hover{border-color:var(--cyan);background:rgba(0,229,255,.05)}
+.file-drop.has-file{border-color:#22e06a;background:rgba(34,224,106,.08)}
+.file-drop input{display:none}
+.file-drop .file-emoji{font-size:32px}
+.file-drop .file-name{font-size:13px;font-weight:600;margin-top:6px;color:var(--cyan)}
+.file-drop .file-size{font-size:11px;color:var(--text-mute);margin-top:2px}
+.icon-preview{width:64px;height:64px;border-radius:14px;object-fit:cover;margin:8px auto;display:none;box-shadow:var(--shadow)}
+.or-divider{display:flex;align-items:center;gap:10px;margin:12px 0;color:var(--text-mute);font-size:11px;text-transform:uppercase;letter-spacing:1px}
+.or-divider::before,.or-divider::after{content:'';flex:1;height:1px;background:var(--border)}
+.upload-submit{width:100%;padding:14px;margin-top:16px;background:var(--grad);color:#fff;border-radius:12px;font-size:15px;font-weight:700;box-shadow:var(--glow-c);border:none;cursor:pointer}
+.upload-submit:disabled{opacity:.5;cursor:wait}
+.admin-app-card{margin:8px 20px;padding:14px;border-radius:16px;background:var(--bg-card);border:var(--border);display:flex;gap:12px;align-items:center}
+.admin-app-card img{width:52px;height:52px;border-radius:12px;object-fit:cover;flex-shrink:0}
+.admin-app-card .info{flex:1;min-width:0}
+.admin-app-card .name{font-size:14px;font-weight:700}
+.admin-app-card .meta{font-size:11px;color:var(--text-dim);margin-top:3px}
+.admin-app-card .dls{font-size:12px;color:var(--cyan);font-weight:700;margin-top:4px;font-family:Orbitron}
+.del-btn{width:36px;height:36px;border-radius:10px;background:rgba(255,59,107,.15);border:1px solid rgba(255,59,107,.3);color:#ff3b6b;font-size:16px;flex-shrink:0;cursor:pointer}
+.admin-logout{margin:16px 20px;padding:12px;border-radius:12px;background:rgba(255,59,107,.1);border:1px solid rgba(255,59,107,.2);color:#ff3b6b;font-size:13px;font-weight:600;width:calc(100% - 40px);cursor:pointer;border:none}
+.admin-stat{padding:16px;border-radius:16px;background:var(--bg-card);border:var(--border);text-align:center}
+.admin-stat .v{font-size:24px;font-weight:800;font-family:Orbitron;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.admin-stat .l{font-size:10px;color:var(--text-dim);text-transform:uppercase;letter-spacing:1px;margin-top:4px}
+.admin-entry{padding:12px 16px;margin:8px 20px;border-radius:14px;background:linear-gradient(135deg,rgba(255,215,0,.1),rgba(255,149,0,.1));border:1px solid rgba(255,215,0,.3);display:flex;align-items:center;gap:12px;cursor:pointer;transition:transform .15s}
+.admin-entry:active{transform:scale(.98)}
+.admin-entry .ico{width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#ffd700,#ff9500);display:flex;align-items:center;justify-content:center;font-size:20px}
+.admin-entry .t{font-size:14px;font-weight:700;color:#ffd700}
+.admin-entry .d{font-size:11px;color:var(--text-dim)}
+.upload-progress{height:4px;background:rgba(0,0,0,.3);border-radius:4px;margin-top:10px;overflow:hidden;display:none}
+.upload-progress .bar{height:100%;background:var(--grad);width:0%;transition:width .2s;border-radius:4px}
+.upload-progress .txt{font-size:11px;color:var(--text-dim);margin-top:4px;text-align:center}
+</style>
+</head>
+<body>
+
+<!-- SPLASH -->
+<div id="splash" class="splash">
+  <div class="splash-grid"></div>
+  <div class="splash-particles" id="splashParticles"></div>
+  <div class="splash-content">
+    <div class="splash-logo-wrap">
+      <div class="splash-logo-ring"></div>
+      <div class="splash-logo-text">Z</div>
+    </div>
+    <h1 class="splash-title">ZYROX STORE</h1>
+    <p class="splash-tagline">Discover • Download • Update</p>
+    <div class="splash-badges">
+      <span class="splash-badge">🔒 Secure</span>
+      <span class="splash-badge">⚡ Fast</span>
+      <span class="splash-badge">✓ Verified</span>
+    </div>
+  </div>
+  <div class="splash-footer">
+    <p class="splash-dev">👑 DEV ARJUN RAJPUT</p>
+    <div class="splash-bar"><div class="splash-bar-fill" id="splashBar"></div></div>
+  </div>
+</div>
+
+<!-- ADMIN LOGIN -->
+<div id="adminLogin" class="admin-login hidden">
+  <div class="admin-login-box">
+    <div class="logo">👑</div>
+    <h2>ADMIN PANEL</h2>
+    <p>Restricted area — authorized access only</p>
+    <input type="text" id="admUser" class="admin-input" placeholder="Username" autocomplete="off">
+    <input type="password" id="admPass" class="admin-input" placeholder="Password" autocomplete="off">
+    <button class="admin-btn" onclick="adminLogin()">LOGIN 🔐</button>
+    <div class="admin-err" id="admErr"></div>
+    <button style="margin-top:12px;font-size:12px;color:var(--text-mute);background:none;border:none;cursor:pointer;text-decoration:underline" onclick="closeAdminLogin()">← Back to Store</button>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app" class="app hidden">
+  <header class="topbar">
+    <div class="topbar-left">
+      <div class="mini-logo"><span>Z</span></div>
+      <span class="topbar-name">ZYROX</span>
+    </div>
+    <div class="topbar-right">
+      <button class="icon-btn" id="notifBtn">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        <span class="notif-dot" id="notifDot"></span>
+      </button>
+      <button class="icon-btn profile-btn" id="profileBtn">
+        <img src="assets/dev-avatar.png" alt="profile">
+      </button>
+    </div>
+  </header>
+
+  <div class="search-wrap">
+    <div class="search-box">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" id="searchInput" placeholder="Search apps, games…">
+      <button class="ai-btn" id="aiBtn">🔍</button>
+    </div>
+  </div>
+
+  <main id="main" class="main"></main>
+
+  <button class="admin-access-btn" id="adminAccessBtn" onclick="openAdminLogin()" title="Admin">🔐</button>
+
+  <nav class="bottomnav">
+    <button class="nav-item active" data-page="home">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+      <span>Home</span>
+    </button>
+    <button class="nav-item" data-page="explore">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <span>Explore</span>
+    </button>
+    <button class="nav-item" data-page="downloads">
+      <div class="nav-center"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></div>
+      <span>Downloads</span>
+    </button>
+    <button class="nav-item" data-page="library">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      <span>Library</span>
+    </button>
+    <button class="nav-item" data-page="profile">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <span>Profile</span>
+    </button>
+  </nav>
+</div>
+
+<div id="appDetail" class="sheet hidden"></div>
+<div id="sheetBackdrop" class="sheet-backdrop hidden"></div>
+<div id="toast" class="toast hidden"></div>
+
+<script src="app.js"></script>
+<script>
+/* ==================== INDEXEDDB FOR APK STORAGE ==================== */
+const DB_NAME = 'zyrox-store';
+const DB_VER = 1;
+const STORE_APKS = 'apks';
+let dbPromise = null;
+
+function openDB(){
+  if(dbPromise) return dbPromise;
+  dbPromise = new Promise((resolve, reject) => {
+    const req = indexedDB.open(DB_NAME, DB_VER);
+    req.onupgradeneeded = e => {
+      const db = e.target.result;
+      if(!db.objectStoreNames.contains(STORE_APKS)){
+        db.createObjectStore(STORE_APKS);
+      }
+    };
+    req.onsuccess = e => resolve(e.target.result);
+    req.onerror = e => reject(e.target.error);
+  });
+  return dbPromise;
+}
+async function idbPut(key, value){
+  const db = await openDB();
+  return new Promise((res,rej) => {
+    const tx = db.transaction(STORE_APKS,'readwrite');
+    tx.objectStore(STORE_APKS).put(value, key);
+    tx.oncomplete = () => res();
+    tx.onerror = e => rej(e.target.error);
+  });
+}
+async function idbGet(key){
+  const db = await openDB();
+  return new Promise((res,rej) => {
+    const tx = db.transaction(STORE_APKS,'readonly');
+    const r = tx.objectStore(STORE_APKS).get(key);
+    r.onsuccess = () => res(r.result);
+    r.onerror = e => rej(e.target.error);
+  });
+}
+async function idbDel(key){
+  const db = await openDB();
+  return new Promise((res,rej) => {
+    const tx = db.transaction(STORE_APKS,'readwrite');
+    tx.objectStore(STORE_APKS).delete(key);
+    tx.oncomplete = () => res();
+  });
+}
+
+/* ==================== ADMIN ==================== */
+const ADMIN_USER = "ZYROXMODS";
+const ADMIN_PASS = "ARJUN209502";
+let IS_ADMIN = LS.get('zx_admin', false);
+let _pendingApkBlob = null;
+let _pendingApkFileName = null;
+
+function openAdminLogin(){
+  document.getElementById('adminLogin').classList.remove('hidden');
+  document.getElementById('admUser').focus();
+}
+function closeAdminLogin(){
+  document.getElementById('adminLogin').classList.add('hidden');
+  document.getElementById('admErr').textContent='';
+  document.getElementById('admUser').value='';
+  document.getElementById('admPass').value='';
+}
+
+function adminLogin(){
+  const u = document.getElementById('admUser').value.trim();
+  const p = document.getElementById('admPass').value.trim();
+  const err = document.getElementById('admErr');
+  if (u === ADMIN_USER && p === ADMIN_PASS) {
+    IS_ADMIN = true;
+    LS.set('zx_admin', true);
+    err.textContent='';
+    closeAdminLogin();
+    showAdminBtn();
+    toast('✅ Welcome Admin!');
+    renderAdminPanel();
+  } else {
+    err.textContent = '❌ Invalid username or password';
+  }
+}
+
+function adminLogout(){
+  IS_ADMIN = false;
+  LS.set('zx_admin', false);
+  hideAdminBtn();
+  renderPage('home');
+  toast('Logged out');
+}
+
+function showAdminBtn(){
+  const b = document.getElementById('adminAccessBtn');
+  if(b) b.classList.add('show');
+}
+function hideAdminBtn(){
+  const b = document.getElementById('adminAccessBtn');
+  if(b) b.classList.remove('show');
+}
+
+/* APK file selection */
+let _selectedApkFile = null;
+function onApkFileSelect(input){
+  const file = input.files[0];
+  _selectedApkFile = file || null;
+  const box = document.getElementById('apkDropBox');
+  const nameEl = document.getElementById('apkFileName');
+  const sizeEl = document.getElementById('apkFileSize');
+  if(file){
+    box.classList.add('has-file');
+    nameEl.textContent = '📦 '+file.name;
+    sizeEl.textContent = formatSize(file.size);
+  } else {
+    box.classList.remove('has-file');
+    nameEl.textContent = 'Tap to select APK file';
+    sizeEl.textContent = 'APK file stored locally on device';
+  }
+}
+
+function formatSize(bytes){
+  if(bytes < 1024) return bytes+' B';
+  if(bytes < 1024*1024) return (bytes/1024).toFixed(1)+' KB';
+  return (bytes/(1024*1024)).toFixed(1)+' MB';
+}
+
+function onIconFileSelect(input){
+  const file = input.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const img = document.getElementById('iconPreview');
+    img.src = e.target.result;
+    img.style.display = 'block';
+  };
+  reader.readAsDataURL(file);
+}
+
+/* Upload new app */
+async function adminUploadApp(){
+  const btn = document.getElementById('publishBtn');
+  const name = document.getElementById('upName').value.trim();
+  const desc = document.getElementById('upDesc').value.trim();
+  const category = document.getElementById('upCat').value;
+  const apkUrl = document.getElementById('upApkUrl').value.trim();
+  const sizeManual = document.getElementById('upSize').value.trim();
+  const version = document.getElementById('upVersion').value.trim() || '1.0';
+  const iconFile = document.getElementById('upIcon').files[0];
+
+  if(!name){ toast('❌ App name required'); return; }
+  if(!desc){ toast('❌ Description required'); return; }
+  if(!_selectedApkFile && !apkUrl){ toast('❌ Select APK file or paste download URL'); return; }
+
+  btn.disabled = true;
+  btn.textContent = '⏳ Publishing...';
+
+  const appData = {
+    id: 'adm_'+Date.now(),
+    name,
+    developer: 'ZYROXMODS 👑',
+    verified: true,
+    category,
+    tags: [category],
+    rating: 5.0,
+    downloads: 0,
+    size: sizeManual || 'Auto',
+    version,
+    versionCode: 100,
+    updated: new Date().toISOString().split('T')[0],
+    android: '7.0+',
+    package: 'com.zyroxmods.' + name.toLowerCase().replace(/[^a-z0-9]/g,'').substring(0,20),
+    sha256: 'admin-verified',
+    description: desc,
+    whats_new: ['First release on ZYROX Store'],
+    permissions: ['INTERNET'],
+    security_status: 'verified',
+    security_scan: 'Admin uploaded & verified',
+    download_url: apkUrl || '',
+    isLocal: !!_selectedApkFile,
+    featured_tag: 'New',
+    screens: 4,
+    icon: 'assets/featured-app1.png',
+    adminUploaded: true
+  };
+
+  // Size detection
+  if(_selectedApkFile){
+    appData.size = formatSize(_selectedApkFile.size);
+  } else if(apkUrl && !sizeManual){
+    try{
+      const r = await fetch(apkUrl, {method:'HEAD'}).catch(()=>null);
+      if(r){
+        const len = r.headers.get('content-length');
+        if(len) appData.size = formatSize(parseInt(len));
+      }
+    }catch(e){}
+  }
+
+  // Save icon
+  if(iconFile){
+    appData.icon = await new Promise(res => {
+      const r = new FileReader();
+      r.onload = e => res(e.target.result);
+      r.readAsDataURL(iconFile);
+    });
+  }
+
+  // Save APK file to IndexedDB if provided
+  if(_selectedApkFile){
+    const prog = document.getElementById('upProgress');
+    const bar = document.getElementById('upBar');
+    const txt = document.getElementById('upProgTxt');
+    prog.style.display = 'block';
+    try{
+      const buf = await _selectedApkFile.arrayBuffer();
+      bar.style.width = '100%';
+      txt.textContent = 'Saving...';
+      await idbPut('apk_'+appData.id, {
+        name: _selectedApkFile.name,
+        size: _selectedApkFile.size,
+        type: _selectedApkFile.type,
+        data: buf,
+        addedAt: Date.now()
+      });
+      appData.download_url = 'local:'+appData.id;
+    }catch(e){
+      console.error('APK save failed:', e);
+      toast('⚠️ APK too large, using link only');
+    }
+    prog.style.display = 'none';
+  }
+
+  // Save to admin apps
+  const adminApps = LS.get('zx_admin_apps', []);
+  adminApps.unshift(appData);
+  LS.set('zx_admin_apps', adminApps);
+
+  // Reset form
+  document.getElementById('upName').value='';
+  document.getElementById('upDesc').value='';
+  document.getElementById('upApkUrl').value='';
+  document.getElementById('upSize').value='';
+  document.getElementById('upVersion').value='';
+  document.getElementById('upIcon').value='';
+  document.getElementById('upApkFile').value='';
+  _selectedApkFile = null;
+  const box = document.getElementById('apkDropBox');
+  if(box) box.classList.remove('has-file');
+  document.getElementById('apkFileName').textContent = 'Tap to select APK file';
+  document.getElementById('apkFileSize').textContent = 'APK file stored locally on device';
+  document.getElementById('iconPreview').style.display='none';
+
+  btn.disabled = false;
+  btn.textContent = '🚀 PUBLISH APP';
+
+  toast('✅ App published: '+name);
+  APPS = null;
+  loadApps();
+  renderAdminPanel();
+}
+
+async function deleteAdminApp(id){
+  if(!confirm('Delete this app? APK file will also be removed.')) return;
+  let apps = LS.get('zx_admin_apps',[]);
+  const app = apps.find(a=>a.id===id);
+  if(app && app.isLocal){
+    try{ await idbDel('apk_'+id); }catch(e){}
+  }
+  apps = apps.filter(a => a.id !== id);
+  LS.set('zx_admin_apps', apps);
+  APPS = null;
+  loadApps();
+  renderAdminPanel();
+  toast('🗑️ App deleted');
+}
+
+async function downloadAdminApp(id){
+  const apps = LS.get('zx_admin_apps',[]);
+  const a = apps.find(x=>x.id===id);
+  if(!a) return;
+  if(a.isLocal){
+    toast('⬇ Preparing download...');
+    try{
+      const stored = await idbGet('apk_'+id);
+      if(stored){
+        const blob = new Blob([stored.data], {type:'application/vnd.android.package-archive'});
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = stored.name || (a.name+'.apk');
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        setTimeout(()=>URL.revokeObjectURL(url), 5000);
+        trackDownload(id);
+        toast('✅ Download started: '+a.name);
+      } else {
+        toast('❌ APK file not found. Please re-upload.');
+      }
+    }catch(e){
+      toast('❌ Download failed: '+e.message);
+    }
+  } else if(a.download_url){
+    trackDownload(id);
+    window.open(a.download_url, '_blank');
+    toast('⬇ Downloading: '+a.name);
+  } else {
+    toast('❌ No APK available');
+  }
+}
+
+function renderAdminPanel(){
+  CURRENT_PAGE = 'admin';
+  const adminApps = LS.get('zx_admin_apps', []);
+  const totalDl = adminApps.reduce((s,a)=>s+(a.downloads||0),0);
+  const catOpts = (APPS.categories||[]).map(c=>`<option value="${c.id}">${c.emoji} ${c.name}</option>`).join('');
+
+  $('#main').innerHTML = `
+  <div class="page admin-panel-pg">
+    <div class="admin-header-bar">
+      <span style="font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px;background:linear-gradient(135deg,#ffd700,#ff9500);color:#000;letter-spacing:1px">👑 ADMIN</span>
+      <h2 style="font-size:22px;font-weight:900;margin-top:10px;font-family:Orbitron;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">ADMIN CONTROL PANEL</h2>
+      <p style="font-size:12px;color:var(--text-dim);margin-top:4px">Logged in as <b style="color:var(--cyan)">${ADMIN_USER}</b> · DEV ARJUN RAJPUT</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:0 20px 16px">
+      <div class="admin-stat"><div class="v">${adminApps.length}</div><div class="l">Total Apps</div></div>
+      <div class="admin-stat"><div class="v">${totalDl}</div><div class="l">Downloads</div></div>
+      <div class="admin-stat"><div class="v">100%</div><div class="l">Verified</div></div>
+    </div>
+
+    <div class="sec-head"><div class="sec-title"><span class="emoji">📤</span> Upload New App</div></div>
+    <div class="upload-form">
+      <label>App Name *</label>
+      <input type="text" id="upName" placeholder="e.g. My Pro App">
+
+      <label>Description *</label>
+      <textarea id="upDesc" placeholder="Describe your app features, what it does..."></textarea>
+
+      <label>Category</label>
+      <select id="upCat">${catOpts}</select>
+
+      <label>APK File * (direct upload)</label>
+      <label class="file-drop" id="apkDropBox" for="upApkFile">
+        <div class="file-emoji">📦</div>
+        <div class="file-name" id="apkFileName" style="font-weight:600;margin-top:6px">Tap to select APK file</div>
+        <div class="file-size" id="apkFileSize" style="font-size:11px;color:var(--text-mute);margin-top:2px">APK file stored locally on device</div>
+        <input type="file" id="upApkFile" accept=".apk,application/vnd.android.package-archive" onchange="onApkFileSelect(this)">
+      </label>
+
+      <div class="or-divider"><span>OR paste external URL</span></div>
+      <input type="url" id="upApkUrl" placeholder="https://.../app.apk (GitHub Releases direct link)">
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <div>
+          <label>Size (auto-detect if empty)</label>
+          <input type="text" id="upSize" placeholder="e.g. 25 MB">
+        </div>
+        <div>
+          <label>Version</label>
+          <input type="text" id="upVersion" placeholder="1.0">
+        </div>
+      </div>
+
+      <label>App Icon / Thumbnail</label>
+      <label class="file-drop" for="upIcon" style="padding:16px">
+        <div class="file-emoji" style="font-size:28px">🖼️</div>
+        <div style="font-size:12px;font-weight:600;margin-top:4px">Select icon image (PNG/JPG)</div>
+        <img id="iconPreview" class="icon-preview">
+        <input type="file" id="upIcon" accept="image/*" onchange="onIconFileSelect(this)">
+      </label>
+
+      <div class="upload-progress" id="upProgress"><div class="bar" id="upBar"></div><div class="txt" id="upProgTxt">Saving APK to storage...</div></div>
+
+      <button class="upload-submit" id="publishBtn" onclick="adminUploadApp()">🚀 PUBLISH APP</button>
+    </div>
+
+    <div class="sec-head"><div class="sec-title"><span class="emoji">📱</span> Your Apps (${adminApps.length})</div></div>
+    ${adminApps.length ? adminApps.map(a => `
+      <div class="admin-app-card" onclick="openApp('${a.id}')">
+        <img src="${a.icon}">
+        <div class="info">
+          <div class="name">${a.name}</div>
+          <div class="meta">${a.category} • v${a.version} • ${a.size} • ${a.isLocal?'📱 Local APK':'🌐 URL'} • ${a.updated}</div>
+          <div class="dls">⬇ ${a.downloads||0} downloads</div>
+        </div>
+        <button class="del-btn" onclick="event.stopPropagation();deleteAdminApp('${a.id}')">🗑️</button>
+      </div>
+    `).join('') : `<div style="text-align:center;padding:40px 20px;color:var(--text-dim)"><div style="font-size:48px;margin-bottom:12px">📱</div><p style="font-size:13px">No apps uploaded yet. Publish your first app above!</p><p style="font-size:11px;color:var(--text-mute);margin-top:8px">Upload APK directly from your phone — no GitHub needed!</p></div>`}
+
+    <button class="admin-logout" onclick="adminLogout()">🚪 LOGOUT ADMIN</button>
+    <div class="dev-credit"><span class="crown">👑</span> ZYROX STORE · DEV ARJUN RAJPUT</div>
+  </div>`;
+  $('#main').scrollTop = 0;
+}
+
+/* Override installApp to handle local APK downloads */
+const _origInstallApp = window.installApp;
+window.installApp = function(id){
+  const apps = LS.get('zx_admin_apps', []);
+  const a = apps.find(x=>x.id===id);
+  if(a && a.isLocal){
+    downloadAdminApp(id);
+    return;
+  }
+  // Fallback to original installApp (from app.js) if exists
+  if(_origInstallApp) _origInstallApp(id);
+};
+
+/* Override loadApps to use admin apps */
+function loadApps(){
+  fetch('data/apps.json').then(r=>r.json()).then(data => {
+    const adminApps = LS.get('zx_admin_apps', []);
+    data.featured = adminApps.filter((_,i)=>i<3);
+    data.trending = [...adminApps].sort((a,b)=>(b.downloads||0)-(a.downloads||0));
+    data.new_releases = [...adminApps];
+    data.editors_choice = adminApps.filter((_,i)=>i<5);
+    data.popular_tools = adminApps.filter(a=>['tools','productivity','security'].includes(a.category));
+    data.popular_games = adminApps.filter(a=>a.category==='games');
+    data.ai_apps = adminApps.filter(a=>a.category==='ai');
+    data.hidden_gems = adminApps.filter(a=>a.rating>=4.5);
+    if(data.featured.length) data.featured.forEach((a,i)=> a.featured_tag = i===0?'Editor\'s Choice':i===1?'Trending':'New');
+    APPS = data;
+    if(CURRENT_PAGE !== 'admin') renderPage(CURRENT_PAGE);
+  });
+}
+
+function trackDownload(appId){
+  const apps = LS.get('zx_admin_apps', []);
+  const a = apps.find(x=>x.id===appId);
+  if(a){ a.downloads = (a.downloads||0)+1; LS.set('zx_admin_apps', apps); }
+}
+
+/* Add admin entry to profile page via event delegation */
+document.addEventListener('click', e => {
+  if(e.target.closest('[data-admin-entry]')){
+    if(IS_ADMIN){
+      renderAdminPanel();
+    } else {
+      openAdminLogin();
+    }
+  }
+});
+
+/* Patch profile page rendering to include Admin entry */
+const _origRenderPage = renderPage;
+renderPage = function(p){
+  _origRenderPage(p);
+  if(p === 'profile'){
+    // Inject admin entry card into profile page after hero
+    const main = document.getElementById('main');
+    const entry = document.createElement('div');
+    entry.className = 'admin-entry';
+    entry.setAttribute('data-admin-entry','1');
+    entry.innerHTML = `
+      <div class="ico">${IS_ADMIN ? '👑' : '🔐'}</div>
+      <div style="flex:1">
+        <div class="t">${IS_ADMIN ? '👑 Admin Dashboard' : '🔐 Admin Login'}</div>
+        <div class="d">${IS_ADMIN ? 'Manage apps, upload new APKs, view stats' : 'Login as administrator (ZYROXMODS only)'}</div>
+      </div>
+      <span style="color:var(--text-dim);font-size:18px">→</span>`;
+    const pg = main.querySelector('.page');
+    if(pg) pg.insertBefore(entry, pg.children[1] || null);
+  }
+};
+
+/* Enter key on admin login inputs */
+document.addEventListener('keydown', e => {
+  if(e.key === 'Enter' && !document.getElementById('adminLogin').classList.contains('hidden')){
+    adminLogin();
+  }
+});
+
+/* Init admin state */
+setTimeout(()=>{
+  if(IS_ADMIN) showAdminBtn();
+  // Also open IndexedDB early
+  openDB().catch(()=>{});
+}, 300);
+</script>
+</body>
+</html>
